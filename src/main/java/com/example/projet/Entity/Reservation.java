@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,13 +17,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class Reservation implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private String idReservation;
-
     @Temporal(TemporalType.DATE)
-
-    private Date anneUniversitaire;
+    private Date anneeUniversitaire;
     private boolean estValide;
-
+    @ManyToMany
+    private Set<Etudiant> etudiants;
 }

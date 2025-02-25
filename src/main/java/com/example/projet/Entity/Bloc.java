@@ -1,16 +1,14 @@
 package com.example.projet.Entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,10 +17,14 @@ import java.io.Serializable;
 @NoArgsConstructor
 
 public class Bloc implements Serializable {
+
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private long idBloc;
+private long idBloc;
     private String nomBloc;
     private long capaciteBloc;
+    @ManyToOne
+    private Foyer foyer;
+    @OneToMany(mappedBy = "bloc")
+    private Set<Chambre> chambres;
 }
