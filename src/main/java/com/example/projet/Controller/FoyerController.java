@@ -2,42 +2,44 @@ package com.example.projet.Controller;
 
 import com.example.projet.Entity.Foyer;
 import com.example.projet.Service.IFoyerService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/foyers")
+@AllArgsConstructor
+@RequestMapping("/foyer")
 public class FoyerController {
 
     @Autowired
-    private IFoyerService foyerService;
+    IFoyerService foyerService;
 
-    // Liste de tous les foyers
-    @GetMapping("/all")
-    public List<Foyer> getAllFoyers() {
+    @PostMapping("/add-foyer")
+    public Foyer addfoyer(@RequestBody Foyer f){
+        return foyerService.addFoyer(f);
+    }
+
+    @PutMapping("/update-foyer")
+    public Foyer updatefoyer(@RequestBody Foyer f){
+        return foyerService.updateFoyer(f);
+    }
+
+    @GetMapping("/display-foyer")
+    public List<Foyer> displayfoyer(){
         return foyerService.retrieveAllFoyers();
     }
 
-    // Foyer par ID
-    @GetMapping("/{id}")
-    public Foyer getFoyerById(@PathVariable("id") long id) {
-        return foyerService.retrieveFoyer(id);
+    @GetMapping("/display-foyerbyid/{id}")
+    public Foyer displayfoyerbyid(@PathVariable("id") long idFoyer){
+        return foyerService.retrieveFoyer(idFoyer);
     }
 
-    // Créer un foyer
-    @PostMapping("/add")
-    public Foyer createFoyer(@RequestBody Foyer foyer) {
-        return foyerService.addFoyer(foyer);
+    @DeleteMapping("/delete-foyer/{id}")
+    public void deletefoyer(@PathVariable("id") long idFoyer){
+        foyerService.removeFoyer(idFoyer);
     }
 
-    // Mettre à jour un foyer
 
-
-    // Supprimer un foyer
-    @DeleteMapping("/delete/{id}")
-    public void deleteFoyer(@PathVariable("id") long id) {
-        foyerService.removeFoyer(id);
-    }
 }

@@ -5,36 +5,31 @@ import com.example.projet.Repository.IReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class ReservationService implements IReservationService {
 
     @Autowired
-     IReservationRepository reservationRepository; // Injection du repository
-
+    IReservationRepository reservationRepository;
     @Override
     public List<Reservation> retrieveAllReservation() {
-        return (List<Reservation>) reservationRepository.findAll(); // Récupérer toutes les réservations
+        return (List<Reservation>) reservationRepository.findAll();
     }
 
     @Override
     public Reservation updateReservation(Reservation res) {
-        return reservationRepository.save(res); // Mettre à jour une réservation existante
+        return reservationRepository.save(res);
     }
 
     @Override
     public Reservation retrieveReservation(String idReservation) {
-        return reservationRepository.findById(idReservation).orElse(null); // Récupérer une réservation par ID
+        return reservationRepository.findById(idReservation).orElse(null);
     }
 
-
-    public Reservation addReservation(Reservation res) {
-        return reservationRepository.save(res); // Ajouter une nouvelle réservation
-    }
-
-
-    public void removeReservation(String idReservation) {
-        reservationRepository.deleteById(idReservation); // Supprimer une réservation par ID
+    @Override
+    public List<Reservation> getReservationParAnneeUniversitaireEtNomUniversite(Date anneeUniversitaire, String nomUniversite) {
+        return reservationRepository.findReservationsByAnneeUniversitaire(anneeUniversitaire);
     }
 }

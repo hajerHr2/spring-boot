@@ -2,42 +2,41 @@ package com.example.projet.Controller;
 
 import com.example.projet.Entity.Etudiant;
 import com.example.projet.Service.IEtudiantService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/etudiants")
+@AllArgsConstructor
+@RequestMapping("/etudiant")
 public class EtudiantController {
-
     @Autowired
-    private IEtudiantService etudiantService;
+    IEtudiantService etudiantService;
 
-    // Liste de tous les étudiants
-    @GetMapping("/all")
-    public List<Etudiant> getAllEtudiants() {
-        return etudiantService.retrieveAllEtudiants();
-    }
-
-    // Etudiant par ID
-    @GetMapping("/{id}")
-    public Etudiant getEtudiantById(@PathVariable("id") long id) {
-        return etudiantService.retrieveEtudiant(id);
-    }
-
-    // Créer de nouveaux étudiants
-    @PostMapping("/add")
-    public List<Etudiant> createEtudiants(@RequestBody List<Etudiant> etudiants) {
+    @PostMapping("/add-etudiants")
+    public List<Etudiant> addEtudiants(@RequestBody List<Etudiant> etudiants) {
         return etudiantService.addEtudiants(etudiants);
     }
 
-    // Mettre à jour un étudiant
-
-
-    // Supprimer un étudiant
-    @DeleteMapping("/delete/{id}")
-    public void deleteEtudiant(@PathVariable("id") long id) {
-        etudiantService.removeEtudiant(id);
+    @PutMapping("/update-etudiant")
+    public Etudiant updateetudiant(@RequestBody Etudiant e){
+        return etudiantService.updateEtudiant(e);
     }
+
+    @GetMapping("/display-etudiant")
+    public List<Etudiant> displayetudiants(){
+        return etudiantService.retrieveAllEtudiants();
+    }
+    @GetMapping("/display-etudiantbyid/{id}")
+    public Etudiant displyetudiantbyid(@PathVariable("id") long idEtudiant){
+        return etudiantService.retrieveEtudiant(idEtudiant);
+    }
+
+    @DeleteMapping("/delete-etudiantbyid/{id}")
+    public void deleteetudiant(@PathVariable("id") long idEtudiant){
+        etudiantService.removeEtudiant(idEtudiant);
+    }
+
 }

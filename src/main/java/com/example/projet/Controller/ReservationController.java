@@ -2,39 +2,37 @@ package com.example.projet.Controller;
 
 import com.example.projet.Entity.Reservation;
 import com.example.projet.Service.IReservationService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reservations")
+@AllArgsConstructor
+@RequestMapping("/reservation")
 public class ReservationController {
-
     @Autowired
-    private IReservationService reservationService;
+    IReservationService reservationService;
 
-    // Liste de toutes les réservations
-    @GetMapping("/all")
-    public List<Reservation> getAllReservations() {
+    @GetMapping("/dispaly-reservations")
+    public List<Reservation> displayreservation() {
         return reservationService.retrieveAllReservation();
     }
 
-    // Réservation par ID
-    @GetMapping("/{id}")
-    public Reservation getReservationById(@PathVariable("id") String id) {
-        return reservationService.retrieveReservation(id);
+    @PutMapping("/update-reservation")
+    public Reservation updatereservation(Reservation r) {
+        return reservationService.updateReservation(r);
     }
 
-    // Créer une réservation
-    @PostMapping("/add")
-    public Reservation createReservation(@RequestBody Reservation reservation) {
-        return reservationService.updateReservation(reservation);
+    @GetMapping("/dispaly-reservationbyid/{id}")
+    public Reservation displayreservationbyid(@PathVariable("id") String idReservation) {
+        return reservationService.retrieveReservation(idReservation);
     }
 
-    // Mettre à jour une réservation
-
-
-    // Supprimer une réservation
-
+    @GetMapping("/reservations/{anneeUniversitaire}/{nomUniversite}")
+    public List<Reservation> getReservationsParAnneeUniversitaire(@PathVariable Date anneeUniversitaire, @PathVariable String nomUniversite) {
+        return reservationService.getReservationParAnneeUniversitaireEtNomUniversite(anneeUniversitaire, nomUniversite);
+    }
 }
